@@ -1,11 +1,12 @@
-import GlobalStyle from "./styles/global.js";
+
+import GlobalStyle from "./styles/global";
 import styled from "styled-components";
-import Form from "./components/Form.js"
-import Grid from "./components/Grid"
+import Form from "./components/Form.js";
+import Grid from "./components/Grid";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Container = styled.div`
   width: 100%;
@@ -25,7 +26,7 @@ function App() {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get("https://localhost:8800/")
+      const res = await axios.get("http://localhost:8800/")
       setUsers(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (err) {
       toast.error(err)

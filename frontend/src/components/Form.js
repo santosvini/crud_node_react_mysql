@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
+import { toast } from "react-toastify";
 
 const FormContainer = styled.form`
   display: flex;
@@ -10,8 +10,8 @@ const FormContainer = styled.form`
   flex-wrap: wrap;
   background-color: #fff;
   padding: 20px;
-  box-shadow: 0px 0px 5px #ccc,
-  border-radius: 8px;
+  box-shadow: 0px 0px 5px #ccc;
+  border-radius: 5px;
 `;
 
 const InputArea = styled.div`
@@ -50,22 +50,21 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
       user.email.value = onEdit.email;
       user.fone.value = onEdit.fone;
       user.data_nascimento.value = onEdit.data_nascimento;
-
     }
   }, [onEdit]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user = ref.current
+    const user = ref.current;
 
     if (
       !user.nome.value ||
       !user.email.value ||
       !user.fone.value ||
-      !user.data_nascimento
+      !user.data_nascimento.value
     ) {
-      return toast.warn("Preencha todos os campos!")
+      return toast.warn("Preencha todos os campos!");
     }
 
     if (onEdit) {
@@ -75,9 +74,9 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
           email: user.email.value,
           fone: user.fone.value,
           data_nascimento: user.data_nascimento.value,
-      })
+        })
         .then(({ data }) => toast.success(data))
-        .catch(({ data }) => toast.error(data))
+        .catch(({ data }) => toast.error(data));
     } else {
       await axios
         .post("http://localhost:8800", {
@@ -87,7 +86,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
           data_nascimento: user.data_nascimento.value,
         })
         .then(({ data }) => toast.success(data))
-        .catch(({ data}) => toast.error(data))
+        .catch(({ data }) => toast.error(data));
     }
 
     user.nome.value = "";
@@ -98,7 +97,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
     setOnEdit(null);
     getUsers();
   };
-  
+
   return (
     <FormContainer ref={ref} onSubmit={handleSubmit}>
       <InputArea>
@@ -107,7 +106,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
       </InputArea>
       <InputArea>
         <Label>E-mail</Label>
-        <Input name="email" type='email' />
+        <Input name="email" type="email" />
       </InputArea>
       <InputArea>
         <Label>Telefone</Label>
@@ -120,7 +119,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
 
       <Button type="submit">SALVAR</Button>
     </FormContainer>
-  )
-}
+  );
+};
 
 export default Form;
